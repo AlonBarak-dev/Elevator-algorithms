@@ -18,6 +18,7 @@ public class NearestElevator implements ElevatorAlgo {
     };
     private Building _building;
     private PriorityQueue<Node>[] callsPr;
+
     public NearestElevator(Building b) {
         _building = b;
         int size = this._building.numberOfElevetors();
@@ -36,7 +37,9 @@ public class NearestElevator implements ElevatorAlgo {
     public String algoName() {
         return "Ex0_NearestElevator";
     }
-/** Auxiliary method for allocateAnElevator function start here: */
+
+
+    /** Auxiliary method for allocateAnElevator function start here: */
     private double suitabilityScore(CallForElevator c, Elevator e){
 
         int currentFloor = e.getPos();
@@ -108,8 +111,6 @@ public class NearestElevator implements ElevatorAlgo {
         return timeSrc + timeDest;
     }
 
-    /** this method return true if the elevator is coming closer to the call's floor and false if it getting away*/
-
     private boolean inMyDirection(CallForElevator c, Elevator e){
 
         int currentElFloor = e.getPos();
@@ -180,7 +181,6 @@ public class NearestElevator implements ElevatorAlgo {
     public void cmdElevator(int elev) {
 
             if (callsPr[elev].peek() != null) {
-                //if (callsPr[elev].size() == 1) {
                     if (callsPr[elev].peek().c.getSrc() == this._building.getElevetor(elev).getPos()) {
                         this._building.getElevetor(elev).stop(this._building.getElevetor(elev).getPos());
                         this._building.getElevetor(elev).goTo(callsPr[elev].remove().c.getDest());
@@ -188,8 +188,6 @@ public class NearestElevator implements ElevatorAlgo {
                         this._building.getElevetor(elev).goTo(callsPr[elev].peek().c.getSrc());
                         this._building.getElevetor(elev).goTo(callsPr[elev].peek().c.getDest());
                     }
-                //}
-
             }
     }
 
