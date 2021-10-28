@@ -20,8 +20,6 @@ public class MyAlgo implements ElevatorAlgo{
         }
     }
 
-
-
     @Override
     public Building getBuilding() {
         return this._building;
@@ -45,6 +43,7 @@ public class MyAlgo implements ElevatorAlgo{
                 minTime = time;
                 bestElevator = i;
             }
+
         }
 
         addCall(src.floor,dest.floor,c,callList[bestElevator],this._building.getElevetor(bestElevator));
@@ -53,18 +52,20 @@ public class MyAlgo implements ElevatorAlgo{
     }
 
 
-
-    private double calcTime(int src, int dest, LinkedList<NodeD> road, Elevator e){
+    private double calcTime(int src, int dest, LinkedList<NodeD> road, Elevator e)
+    {
         double time = 0;
         double timeToSrc = 0, timeToDest = 0;
         double startTime = e.getStartTime(), stopTime = e.getStopTime(), openTime = e.getTimeForOpen(), closeTime = e.getTimeForClose(), speed = e.getSpeed();
         int pos = e.getPos();
+
         if (road.size() == 0){
             int distanceSrc = Math.abs(src - pos), distanceDest = Math.abs(dest - src);
             timeToSrc = startTime + distanceSrc/speed + stopTime + openTime + closeTime;
             timeToDest = startTime + distanceDest/speed + stopTime + openTime + closeTime;
-            return time = timeToSrc + timeToDest;
+            return time = timeToSrc + timeToDest-1;
         }
+
 
         /////// Find place to src Node and compute its time
 
@@ -148,10 +149,10 @@ public class MyAlgo implements ElevatorAlgo{
             floorDest += Math.abs(road.get(index2).floor);
             index2++;
         }
-
         timeToDest = floorDest/speed + (index2-index)*(startTime + stopTime + openTime + closeTime);
 
         time = timeToSrc + timeToSrc;
+
 
         return time;
     }
@@ -241,134 +242,24 @@ public class MyAlgo implements ElevatorAlgo{
 
 
     }
-    
+
     @Override
     public void cmdElevator(int elev) {
 
-
         if (callList[elev].peek() != null && _building.getElevetor(elev).getState() != Elevator.ERROR) {
 
-            if (callList[elev].peek().c.getState() == 1 && _building.getElevetor(elev).getState() == Elevator.LEVEL) {
+              if (callList[elev].peek().c.getState() == 1 && _building.getElevetor(elev).getState() == Elevator.LEVEL) {
 
-                _building.getElevetor(elev).goTo(callList[elev].peek().c.getSrc());
-            }
-            else if (callList[elev].peek().c.getState() == 2 && _building.getElevetor(elev).getState() == Elevator.LEVEL) {
+                  _building.getElevetor(elev).goTo(callList[elev].peek().c.getSrc());
+              }
+              else if (callList[elev].peek().c.getState() == 2 && _building.getElevetor(elev).getState() == Elevator.LEVEL) {
 
-                _building.getElevetor(elev).goTo(callList[elev].peek().c.getDest());
-            }
-            else if (callList[elev].peek().c.getState() == 3) {
+                  _building.getElevetor(elev).goTo(callList[elev].peek().c.getDest());
+              }
+              else if (callList[elev].peek().c.getState() == 3) {
 
-                callList[elev].remove();
-            }
+                  callList[elev].remove();
+              }
         }
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**  if (road.size() == 1){
- int dirc2 = 0;
- if (e.getPos() > road.peek())
- dirc2 = -1;
- else
- dirc2 = 1;
-
- if (dirc == dirc2 && dirc == 1){        //case: same dirction -> UP
- if (src <= road.peek()) {       // src is below the peek
- if (src >= e.getPos()) {        //src is above the elevator
- timeSrc = e.getStartTime() + e.getSpeed() / (Math.abs(e.getPos() - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- if (dest <= road.peek())    // dest is below the peek
- timeDest = e.getStartTime() + e.getSpeed() / (Math.abs(dest - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- else {       //dest is above the peek
- timeDest = e.getStartTime() + e.getSpeed() / (Math.abs(road.peek() - dest)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- timeDest += e.getStartTime() + e.getSpeed() / (Math.abs(road.peek() - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- }
- time = timeSrc + timeDest;
- return time;
- }
- else{
-
- }
- }
- else{      // src is above the peek
- timeSrc = e.getStartTime() + e.getSpeed()/(Math.abs(e.getPos()-road.peek())) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- timeSrc = timeSrc + e.getStartTime() + e.getSpeed()/(Math.abs(road.peek()-src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- timeDest = e.getStartTime() + e.getSpeed() / (Math.abs(dest - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- }
- }
- else if (dirc == dirc2 && dirc == -1) {         // case: same direction -> DOWN
- if (src >= road.peek() ) {       // src is above the peek
- timeSrc = e.getStartTime() + e.getSpeed() / (Math.abs(e.getPos() - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- }
- else {      // src is under the peek
- timeSrc = e.getStartTime() + e.getSpeed() / (Math.abs(e.getPos() - road.peek())) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- timeSrc = timeSrc + e.getStartTime() + e.getSpeed() / (Math.abs(road.peek() - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- }
- }
- else{           // different directions
- timeSrc = e.getStartTime() + e.getSpeed() / (Math.abs(e.getPos() - road.peek())) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- timeSrc = timeSrc + e.getStartTime() + e.getSpeed() / (Math.abs(road.peek() - src)) + e.getStopTime() + e.getTimeForOpen() + e.getTimeForClose();
- }
- }
- */

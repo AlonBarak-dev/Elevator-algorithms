@@ -2,8 +2,6 @@ package ex0;
 
 import ex0.algo.ElevatorAlgo;
 import ex0.algo.MyAlgo;
-import ex0.algo.NearestElevator;
-import ex0.algo.ShabatElev3Algo;
 import ex0.simulator.Simulator_A;
 
 /**
