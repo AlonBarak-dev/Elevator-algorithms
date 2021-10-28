@@ -45,7 +45,7 @@ public class MyAlgo implements ElevatorAlgo{
             }
         }
         addCall(src.floor,dest.floor,c,callList[bestElevator],this._building.getElevetor(bestElevator));
-        cmdElevator(bestElevator);
+        //cmdElevator(bestElevator);
         return bestElevator;
     }
 
@@ -241,15 +241,12 @@ public class MyAlgo implements ElevatorAlgo{
 
     @Override
     public void cmdElevator(int elev) {
-
         if (callList[elev].peek() != null && _building.getElevetor(elev).getState() != Elevator.ERROR) {
 
-              if (callList[elev].peek().c.getState() == 1 && _building.getElevetor(elev).getState() == Elevator.LEVEL) {
-
+              if ((callList[elev].peek().c.getState() == 1 || callList[elev].peek().c.getState() == 0) && _building.getElevetor(elev).getState() == Elevator.LEVEL ) {
                   _building.getElevetor(elev).goTo(callList[elev].peek().c.getSrc());
               }
               else if (callList[elev].peek().c.getState() == 2 && _building.getElevetor(elev).getState() == Elevator.LEVEL) {
-
                   _building.getElevetor(elev).goTo(callList[elev].peek().c.getDest());
               }
               else if (callList[elev].peek().c.getState() == 3) {

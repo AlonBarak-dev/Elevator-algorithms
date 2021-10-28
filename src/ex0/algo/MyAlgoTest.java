@@ -20,7 +20,7 @@ class MyAlgoTest {
     CallForElevator call3;
 
     public MyAlgoTest(){
-        Simulator_A.initData(0, null);
+        Simulator_A.initData(1, null);
         b1 = Simulator_A.getBuilding();
         algo1 = new MyAlgo(b1);
         elev1 = b1.getElevetor(0);
@@ -37,12 +37,12 @@ class MyAlgoTest {
 
             @Override
             public int getSrc() {
-                return 10;
+                return 0;
             }
 
             @Override
             public int getDest() {
-                return 50;
+                return 5;
             }
 
             @Override
@@ -59,8 +59,8 @@ class MyAlgoTest {
 
         Simulator_A.initData(9,null);
         b3 = Simulator_A.getBuilding();
-        algo3 = new MyAlgo(b1);
-        elev3 = b1.getElevetor(0);
+        algo3 = new MyAlgo(b3);
+        elev3 = b3.getElevetor(9);
         call3 = new CallForElevator() {
             @Override
             public int getState() {
@@ -74,12 +74,12 @@ class MyAlgoTest {
 
             @Override
             public int getSrc() {
-                return 10;
+                return -2;
             }
 
             @Override
             public int getDest() {
-                return 50;
+                return 20;
             }
 
             @Override
@@ -112,13 +112,30 @@ class MyAlgoTest {
 
     @Test
     void allocateAnElevatorTest(){
-        int floor = algo1.allocateAnElevator(call);
-        assertEquals(0,floor);
+        int numEl1 = algo1.allocateAnElevator(call);
+        if (numEl1 > b1.numberOfElevetors() || numEl1 < 0)
+            fail();
 
-
+        int numEl2 = algo3.allocateAnElevator(call3);
+        if (numEl2 > b3.numberOfElevetors() || numEl2 < 0)
+            fail();
 
     }
 
+
+    @Test
+    void cmdElevator(){
+        int elev = algo1.allocateAnElevator(call);
+        algo1.cmdElevator(elev);
+        int state = b1.getElevetor(elev).getState();
+        assertEquals(1,state);
+
+        int elevv = algo3.allocateAnElevator(call3);
+        algo3.cmdElevator(elevv);
+        int state2 = b3.getElevetor(elevv).getState();
+        assertEquals(1,state2);
+
+    }
 
 
 }
