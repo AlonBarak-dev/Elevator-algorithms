@@ -11,6 +11,10 @@ public class MyAlgo implements ElevatorAlgo{
     private Building _building;
     private LinkedList<NodeD>[] callList;
 
+    /**
+     * simple constructor for the algorithm
+     * @param b - building
+     */
     public MyAlgo(Building b){
         this._building = b;
         int size = this._building.numberOfElevetors();
@@ -30,6 +34,12 @@ public class MyAlgo implements ElevatorAlgo{
         return "Ex0_MyAlgo";
     }
 
+    /**
+     * this method calculate the time for each elevator to take care of the call
+     * and return the elevator which its time is the best
+     * @param c the call for elevator (src, dest)
+     * @return the ID of the best elevator to pick up the call
+     */
     @Override
     public int allocateAnElevator(CallForElevator c) {
         int bestElevator = 0;
@@ -49,20 +59,26 @@ public class MyAlgo implements ElevatorAlgo{
         return bestElevator;
     }
 
-
+    /**
+     * @param src - source floor
+     * @param dest - destination floor
+     * @param c - the call itself
+     * @param road - the linked list which represent the road of the elevator
+     * @param e - the elevator
+     * @return - the time that will take to the current elevator to take care of the elevator
+     */
     private double calcTime(int src, int dest,CallForElevator c ,LinkedList<NodeD> road, Elevator e)
     {
         double time = 0;
         double timeToSrc = 0, timeToDest = 0;
         double startTime = e.getStartTime(), stopTime = e.getStopTime(), openTime = e.getTimeForOpen(), closeTime = e.getTimeForClose(), speed = e.getSpeed();
         int pos = e.getPos();
-        double beforeCallTime = 0, afterCallTime = 0,counter = 0,floors = 0;
 
         if (road.size() == 0){
             int distanceSrc = Math.abs(src - pos), distanceDest = Math.abs(dest - src);
             timeToSrc = startTime + distanceSrc/speed + stopTime + openTime + closeTime;
             timeToDest = startTime + distanceDest/speed + stopTime + openTime + closeTime;
-            return time = timeToSrc + timeToDest-10;
+            return time = timeToSrc + timeToDest - 10;
         }
 
         /////// Find place to src Node and compute its time
@@ -153,6 +169,14 @@ public class MyAlgo implements ElevatorAlgo{
         return time; //+ afterCallTime - beforeCallTime;
     }
 
+
+    /**
+     * @param src - source floor
+     * @param dest - destination floor
+     * @param c - the call itself
+     * @param road - the linked list which represent the road of the elevator
+     * @param e - the elevator that won the call
+     */
     private void addCall(int src, int dest,CallForElevator c ,LinkedList<NodeD> road, Elevator e){
 
         if (road.size() == 0){
@@ -239,6 +263,11 @@ public class MyAlgo implements ElevatorAlgo{
 
     }
 
+
+    /**
+     * this method is the low level method that take the elevators to them destination using the goTo method.
+     * @param elev the current Elevator index on which the operation is performs.
+     */
     @Override
     public void cmdElevator(int elev) {
         if (callList[elev].peek() != null && _building.getElevetor(elev).getState() != Elevator.ERROR) {

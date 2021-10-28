@@ -4196,4 +4196,4 @@
 3598.0,Elev,31,  arrived at dest, -4, this call is done!, Elevator call,3502.7523067267057,47,-4,3,9, Done, dt, 95.24769327329432
 3599.0, elevID,31,  pos,-4,  cmd, goto,45
 3600.0,************* Simulation Ended ************
-Code Owners,123456789,213487598,  Case,6,  Total waiting time: 312714.88209694874,  average waiting time per call: 312.71488209694877,  unCompleted calls,91,  certificate, -30395151563
+Code Owners,123456789,213487598,325022952,  Case,6,  Total waiting time: 312714.88209694874,  average waiting time per call: 312.71488209694877,  unCompleted calls,91,  certificate, -30395151563

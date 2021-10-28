@@ -14,6 +14,8 @@ class MyAlgoTest {
     Elevator elev1;
     CallForElevator call;
 
+    CallForElevator call2;
+
     Building b3;
     MyAlgo algo3;
     Elevator elev3;
@@ -56,6 +58,37 @@ class MyAlgoTest {
             }
         };
 
+        call2 = new CallForElevator() {
+            @Override
+            public int getState() {
+                return 0;
+            }
+
+            @Override
+            public double getTime(int state) {
+                return 0;
+            }
+
+            @Override
+            public int getSrc() {
+                return 0;
+            }
+
+            @Override
+            public int getDest() {
+                return 2;
+            }
+
+            @Override
+            public int getType() {
+                return 0;
+            }
+
+            @Override
+            public int allocatedTo() {
+                return 0;
+            }
+        };
 
         Simulator_A.initData(9,null);
         b3 = Simulator_A.getBuilding();

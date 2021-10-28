@@ -2207,4 +2207,4 @@
 3595.0, elevID,10,  pos,9,  cmd, goto,-2
 3597.0,Elevator call,3596.190305112116,17,0,1,3, got allocated to elevator, 3
 3600.0,************* Simulation Ended ************
-Code Owners,123456789,213487598,  Case,4,  Total waiting time: 51060.455368642084,  average waiting time per call: 102.12091073728416,  unCompleted calls,13,  certificate, -3708632853
+Code Owners,123456789,213487598,325022952,  Case,4,  Total waiting time: 51060.455368642084,  average waiting time per call: 102.12091073728416,  unCompleted calls,13,  certificate, -3708632853

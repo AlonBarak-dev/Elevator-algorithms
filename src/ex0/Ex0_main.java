@@ -9,7 +9,7 @@ import ex0.simulator.Simulator_A;
  * starting to implement the algorithm.
  */
 public class Ex0_main {
-    public static Long ID0=123456789L, ID1 = 213487598L, ID2 = null;
+    public static Long ID0=123456789L, ID1 = 213487598L, ID2 = 325022952L;
     public static void main(String[] ar) {
         for (int i = 0; i <= 9; i++) {
             String codeOwner = codeOwner();

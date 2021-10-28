@@ -1,0 +1,77 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class MyAlgo{
+    -Building b
+    -LinkedList<NodeD>[] callList
+    +Building getBuilding()
+    +String getAlgo()
+    +int allocateAnElevator()
+    +void cmdElevator()
+    -double calcTime()
+    -double addCall()
+}
+class NodeD{
+-int floor
+-CallForElevator c
+}
+
+interface ElevatorAlgo{
++Building getBuilding()
++String getAlgo()
++int allocateAnElevator()
++void cmdElevator()
+}
+interface Elevator{
++{static}int Up
++{static}int Down
++{static}int Level
++{static}int Error
+
++int getMinFloor()
++int getMaxFloor()
++double getTimeForOpen()
++double getTimeForClose()
++int getState()
++int getPos()
++boolean goTo(int floor)
++boolean stop(int floor)
++double getSpeed()
++double getStartTime()
++double getStopTime()
++int getID()
+}
+interface CallForElevator{
++{static}INIT
++{static}GOING2SRC
++{static}GOING2DEST
++{static}DONE
++{static}UP
++{static}DOWN
+
++int getState()
++double getTime(int state)
++int getSrc()
++int getDest()
++int getType()
++int allocatedTo()
+}
+
+interface Building{
++String getBuildingName()
++int minFloor()
++int maxFloor()
++int numberOfElevators()
++Elevator getElevator(int i)
+}
+
+
+MyAlgo <|-- ElevatorAlgo
+MyAlgo <|-- Building
+MyAlgo <|-- Elevator
+MyAlgo <|-- CallForElevator
+MyAlgo <|- NodeD
+
+
+
+@enduml
