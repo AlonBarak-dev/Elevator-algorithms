@@ -38,34 +38,32 @@ public class MyAlgo implements ElevatorAlgo{
         double minTime = Integer.MAX_VALUE;
 
         for (int i = 0; i < callList.length; i++ ){
-            double time = calcTime(src.floor, dest.floor, callList[i],this._building.getElevetor(i));
+            double time = calcTime(src.floor, dest.floor,c, callList[i],this._building.getElevetor(i));
             if(time < minTime){
                 minTime = time;
                 bestElevator = i;
             }
-
         }
-
         addCall(src.floor,dest.floor,c,callList[bestElevator],this._building.getElevetor(bestElevator));
         cmdElevator(bestElevator);
         return bestElevator;
     }
 
 
-    private double calcTime(int src, int dest, LinkedList<NodeD> road, Elevator e)
+    private double calcTime(int src, int dest,CallForElevator c ,LinkedList<NodeD> road, Elevator e)
     {
         double time = 0;
         double timeToSrc = 0, timeToDest = 0;
         double startTime = e.getStartTime(), stopTime = e.getStopTime(), openTime = e.getTimeForOpen(), closeTime = e.getTimeForClose(), speed = e.getSpeed();
         int pos = e.getPos();
+        double beforeCallTime = 0, afterCallTime = 0,counter = 0,floors = 0;
 
         if (road.size() == 0){
             int distanceSrc = Math.abs(src - pos), distanceDest = Math.abs(dest - src);
             timeToSrc = startTime + distanceSrc/speed + stopTime + openTime + closeTime;
             timeToDest = startTime + distanceDest/speed + stopTime + openTime + closeTime;
-            return time = timeToSrc + timeToDest-1;
+            return time = timeToSrc + timeToDest-10;
         }
-
 
         /////// Find place to src Node and compute its time
 
@@ -106,10 +104,9 @@ public class MyAlgo implements ElevatorAlgo{
             findSrc = true;
             floorSrc += Math.abs(road.get(index).floor - src);
             index++;
-
             int dist = Math.abs(src - dest);
             timeToDest = dist/speed + startTime + stopTime + openTime + closeTime;
-            return time = timeToSrc + timeToDest;
+            return time = timeToDest + timeToSrc;
         }
 
         //////////// Find a place for dest and compute its time
@@ -153,8 +150,7 @@ public class MyAlgo implements ElevatorAlgo{
 
         time = timeToSrc + timeToSrc;
 
-
-        return time;
+        return time; //+ afterCallTime - beforeCallTime;
     }
 
     private void addCall(int src, int dest,CallForElevator c ,LinkedList<NodeD> road, Elevator e){
@@ -257,7 +253,6 @@ public class MyAlgo implements ElevatorAlgo{
                   _building.getElevetor(elev).goTo(callList[elev].peek().c.getDest());
               }
               else if (callList[elev].peek().c.getState() == 3) {
-
                   callList[elev].remove();
               }
         }
